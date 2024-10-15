@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train Seat </title>
+    <link rel="stylesheet" href="seat.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div class="train-container">
+        <div class="row">
+            <h2>Compartment 1 :</h2>
+            <div class="seat-box" id="seatbox1">
+                <div class="upper" id="upper1">Upper</div>
+                <div class="middle" id="middle1">Middle</div>
+                <div class="lower" id="lower1">Lower</div>
+            </div>
+                <div class="seat-box" id="seatbox2">
+                <div class="upper" id="upper2">Upper</div>
+                <div class="middle" id="middle2">Middle</div>
+                <div class="lower" id="lower2">Lower</div>
+            </div>
+            <div class="seat-box" id="seatbox3">
+                <div class="upper" id="upper3">Upper</div>
+                <div class="middle" id="middle3">Middle</div>
+                <div class="lower" id="lower3">Lower</div>
+            </div>
+            <div class="seat-box" id="seatbox4">
+                <div class="upper" id="upper4">Upper</div>
+                <div class="middle" id="middle4">Middle</div>
+                <div class="lower" id="lower4">Lower</div>
+            </div>
+                <div class="seat-box" id="seatbox5">
+                <div class="upper" id="upper5">Upper</div>
+                <div class="middle" id="middle5">Middle</div>
+                <div class="lower" id="lower5">Lower</div>
+            </div>
+            <div class="seat-box" id="seatbox6">
+                <div class="upper" id="upper6">Upper</div>
+                <div class="middle" id="middle6">Middle</div>
+                <div class="lower" id="lower6">Lower</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <h2>Compartment 2 :</h2>
+            <div class="seat-box"  id="seatbox7">
+                <div class="upper" id="upper7">Upper</div>
+                <div class="middle" id="middle7">Middle</div>
+                <div class="lower" id="lower7">Lower</div>
+            </div>
+            <div class="seat-box"  id="seatbox8">
+                <div class="upper" id="upper8">Upper</div>
+                <div class="middle" id="middle8">Middle</div>
+                <div class="lower" id="lower8">Lower</div>
+            </div>
+                <div class="seat-box"  id="seatbox9">
+                <div class="upper" id="upper9">Upper</div>
+                <div class="middle" id="middle9">Middle</div>
+                <div class="lower" id="lower9">Lower</div>
+            </div>
+                <div class="seat-box"  id="seatbox10">
+                <div class="upper" id="upper10">Upper</div>
+                <div class="middle" id="middle10">Middle</div>
+                <div class="lower" id="lower10">Lower</div>
+            </div>
+            <div class="seat-box"  id="seatbox11">
+                <div class="upper" id="upper11">Upper</div>
+                <div class="middle" id="middle11">Middle</div>
+                <div class="lower" id="lower11">Lower</div>
+            </div>
+            <div class="seat-box" id="seatbox12">
+                <div class="upper" id="upper12">Upper</div>
+                <div class="middle" id="middle12">Middle</div>
+                <div class="lower" id="lower12">Lower</div>
+            </div>
+        </div>
+    </div>
+<script>
+    var detail = JSON.parse(localStorage.getItem('details')) || [];
+
+let UpperAllocation = 0;
+let MiddleAllocation = 0;
+let LowerAllocation = 0;
+detail.forEach(bookingarr => {
+if(bookingarr.age >=60) {
+    const lower = document.getElementsByClassName('lower');
+
+    if(LowerAllocation < lower.length){
+        lower[LowerAllocation].innerHTML = "Allocated";
+        lower[LowerAllocation].classList.add('Allocated');
+
+        lower[LowerAllocation].style.borderColor = 'black';
+        lower[LowerAllocation].style.backgroundColor = 'green';
+
+        const allocation_id = lower[LowerAllocation].getAttribute('id');
+        console.log(allocation_id);
+
+        bookingarr.allocation_id = allocation_id;
+
+        localStorage.setItem('allocate',JSON.stringify(detail));
+
+        console.log(detail);
+        LowerAllocation++;
+    }else{
+        console.log('No lower berths available for allocation.')
+    }
+}else if (bookingarr.age>=40 && bookingarr.age<60) {
+    const middle = document.getElementsByClassName('middle');
+
+    if (MiddleAllocation<middle.length){
+        middle[MiddleAllocation].innerHTML = "Allocated";
+        middle[MiddleAllocation].classList.add('Allocated');
+
+        middle[MiddleAllocation].style.borderColor = 'black';
+        middle[MiddleAllocation].style.backgroundColor = 'green';
+
+        const allocation_id = middle[MiddleAllocation].getAttribute('id');
+        console.log(allocation_id);  
+
+        bookingarr.allocation_id = allocation_id;
+
+        localStorage.setItem('allocate',JSON.stringify(detail));
+
+        console.log(detail);
+        MiddleAllocation++;
+    }else{
+        console.log('No middle berths available for allocation.')
+    }
+}else if (bookingarr.age <=39) {
+    const upper = document.getElementsByClassName('upper');
+
+    if (UpperAllocation<upper.length){
+        upper[UpperAllocation].innerHTML = "Allocated";
+        upper[UpperAllocation].classList.add('Allocated');
+
+        upper[UpperAllocation].style.borderColor = 'black';
+        upper[UpperAllocation].style.backgroundColor = 'green';
+
+        const allocation_id = upper[UpperAllocation].getAttribute('id');
+        console.log(allocation_id);  
+
+        bookingarr.allocation_id = allocation_id;
+
+        localStorage.setItem('allocate',JSON.stringify(detail));
+
+        console.log(detail);
+        UpperAllocation++;
+    }else{
+        console.log('No middle berths available for allocation.')
+    }
+}
+    var upper=document.querySelectorAll('.upper')
+    console.log("--------------"+upper);
+    upper.forEach(ele =>{
+        ele.addEventListener('click',() =>{
+            console.log(ele.id)
+            detail.forEach(val =>{
+                if(ele.id == val.allocation_id){
+                    Swal.fire({
+                        title:"Good job!",
+                        text:val.Name + " " +val.Phone + " "+val.age + " "+val.aadhar+ " "+val.Gender+ " "+val.source+" "+val.destination+" "+val.trainName+' '+val.trainNo+" "+val.Date+" ",
+                        icon:"sucess"
+                    })
+                }
+            })
+        })
+    }) 
+    var middle=document.querySelectorAll('.middle')
+    console.log("--------------"+middle);
+    middle.forEach(ele =>{
+        ele.addEventListener('click',() =>{
+            console.log(ele.id)
+            detail.forEach(val =>{
+                if(ele.id == val.allocation_id){
+                    Swal.fire({
+                        title:"Good job!",
+                        text:val.Name + " " +val.Phone + " "+val.age + " "+val.aadhar+ " "+val.Gender+ " "+val.source+" "+val.destination+" "+val.trainName+' '+val.trainNo+" "+val.Date+" ",
+                        icon:"sucess"
+                    })
+                }
+            })
+        })
+    }) 
+    var lower=document.querySelectorAll('.lower')
+    console.log("--------------"+lower);
+    lower.forEach(ele =>{
+        ele.addEventListener('click',() =>{
+            console.log(ele.id)
+            detail.forEach(val =>{
+                if(ele.id == val.allocation_id){
+                    Swal.fire({
+                        title:"Good job!",
+                        text:val.Name + " " +val.Phone + " "+val.age + " "+val.aadhar+ " "+val.Gender+ " "+val.source+" "+val.destination+" "+val.trainName+' '+val.trainNo+" "+val.Date+" ",
+                        icon:"sucess"
+                    })
+                }
+            })
+        })
+    }) 
+});
+</script>
+</body>
+</html>
